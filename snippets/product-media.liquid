@@ -1,0 +1,19 @@
+{% case media.media_type %}
+  {% when 'image' %}
+    <img
+      src="{{shop.secure_url}}/cdn/shop/{{media | image_url: 'large'}}"
+      width=""
+      height=""
+      alt="{{ media.preview_image.alt }}"
+      class="w-full h-full object-cover"
+    >
+  {% when 'external_video' %}
+    {{ media | external_video_tag: class: 'w-full h-80 object-cover' }}
+
+  {% when 'video' %}
+    {{ media | video_tag: controls: true, class: 'w-full h-80 object-cover' }}
+  {% when 'model' %}
+    {{ media | model_viewer_tag: class: 'w-full h-80 object-cover' }}
+  {% else %}
+    {{ media | media_tag }}
+{% endcase %}
