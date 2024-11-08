@@ -42,6 +42,9 @@
         {% endfor %}
       </div>
     </div>
+    <div class="max-w-6xp mx-auto">
+      {% render 'pagination', pagination: paginate %}
+    </div>
   {% endpaginate %}
 </div>
 
