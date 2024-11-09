@@ -20,8 +20,8 @@
     "featured-collection": {
       "type": "featured-collection",
       "settings": {
-        "title": "Classic T-Shirts",
-        "featured_collection": "all",
+        "title": "Sale Collection",
+        "featured_collection": "sale-collection",
         "number_of_products_to_show": 4
       }
     }
