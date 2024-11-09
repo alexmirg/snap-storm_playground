@@ -34,7 +34,6 @@ class ProductModel extends HTMLElement {
     );
 
     openModalButton.addEventListener("click", () => {
-      console.log("clicked");
       modal.querySelector("#body").innerHTML = "";
 
       const template = document.querySelector(
