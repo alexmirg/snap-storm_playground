@@ -8,13 +8,8 @@
  * ------------------------------------------------------------
  */
 {
-  "sections": {
-    "template": {
-      "type": "template-customer-addresses",
-      "settings": {}
-    }
-  },
-  "order": [
-    "template"
-  ]
+  "current": {},
+  "presets": {
+    "Default": {}
+  }
 }
