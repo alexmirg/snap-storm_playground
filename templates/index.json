@@ -9,14 +9,6 @@
  */
 {
   "sections": {
-    "featured-collection": {
-      "type": "featured-collection",
-      "settings": {
-        "title": "Featured Collection",
-        "featured_collection": "all",
-        "number_of_products_to_show": 4
-      }
-    },
     "featured_collection_iLNwg8": {
       "type": "featured-collection",
       "settings": {
@@ -24,10 +16,18 @@
         "featured_collection": "classic-t-shirts",
         "number_of_products_to_show": 4
       }
+    },
+    "featured-collection": {
+      "type": "featured-collection",
+      "settings": {
+        "title": "Featured Collection",
+        "featured_collection": "all",
+        "number_of_products_to_show": 4
+      }
     }
   },
   "order": [
-    "featured-collection",
-    "featured_collection_iLNwg8"
+    "featured_collection_iLNwg8",
+    "featured-collection"
   ]
 }
