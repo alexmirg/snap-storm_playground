@@ -60,6 +60,28 @@
             </div>
           </div>
         </div>
+        <div class="p-4 md:p-12">
+          <h3 class="text-lg font-medium mb-4">Filfillment</h3>
+          {% if line_item.successfully_fulfilled_quantity > 0 %}
+            <p class="mb-2">
+              We have fulfilled {{ line_item.successfully_fulfilled_quantity }} items of your recent order.
+            </p>
+            <p class="mb-2">Tracking company: {{ line_item.fulfillment.tracking_company }}</p>
+            <p class="mb-2">Tracking number: {{ line_item.fulfillment.tracking_number }}</p>
+            <a
+              href="{{ line_item.fulfillment.tracking_url }}"
+              target="_blank"
+              class="flex w-max text-sm text-white font-medium bg-gray-700 hover:bg-gray-900 px-4 py-2 rounded"
+            >
+              Track order
+              <span class="ml-1 flex items-center justify-center">
+                {% render 'icon-link' %}
+              </span>
+            </a>
+          {% else %}
+            <p class="text-gray-500">This item has not been fulfilled yet.</p>
+          {% endif %}
+        </div>
       </div>
     {% endfor %}
   </div>
