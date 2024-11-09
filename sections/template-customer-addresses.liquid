@@ -99,6 +99,8 @@
             Country
           </label>
           <select
+            data-country-selector
+            data-id="{{ form.id }}"
             name="address[country]"
             id="address_country_{{form.id}}"
             value="{{ form.country }}"
@@ -174,3 +176,91 @@
     {% endpaginate %}
   </div>
 </div>
+
+<script>
+  class CustomerAddress {
+    constructor() {
+      this.initCustomerAddress();
+      this.customerAddressesSelector();
+    }
+
+    initCustomerAddress() {
+      const allAddressesSelector = document.querySelectorAll('select[data-country-selector]');
+      if (allAddressesSelector.length < 1) return;
+
+      console.log('Customer Address Initialized', allAddressesSelector);
+      allAddressesSelector.forEach((select) => {
+        const selectedCountry = this.getSelectedCountry(select);
+
+        if (!selectedCountry) return;
+
+        const provinces = selectedCountry.dataset.provinces;
+        const arrayOfProvince = JSON.parse(provinces);
+        const provinceSelector = document.querySelector(`#address_province_${select.dataset.id}`);
+
+        if (arrayOfProvince.length < 1) {
+          provinceSelector.setAttribute('disabled', 'disabled');
+        } else {
+          provinceSelector.removeAttribute('disabled');
+        }
+
+        provinceSelector.innerHTML = '';
+
+        let options = '';
+        for (let idx = 0; idx < arrayOfProvince.length; idx++) {
+          if (arrayOfProvince[idx][0] === provinceSelector.getAttribute('value')) {
+            options += `<options value="${arrayOfProvince[idx][0]}" selected>${arrayOfProvince[idx][1]}</options>`;
+          } else {
+            options += `<options value="${arrayOfProvince[idx][0]}">${arrayOfProvince[idx][1]}</options>`;
+          }
+        }
+
+        provinceSelector.innerHTML = options;
+      });
+    }
+
+    getSelectedCountry(select) {
+      let option;
+      let selectedOption;
+      for (let idx = 0; idx < select.options.length; idx++) {
+        option = select.options[idx];
+
+        if (option.value === select.getAttribute('value')) {
+          selectedOption = option;
+          selectedOption.setAttribute('selected', 'selected');
+          break;
+        }
+      }
+
+      return selectedOption;
+    }
+
+    customerAddressesSelector() {
+      const addressesSelector = document.querySelectorAll('select[data-country-selector]');
+      if (addressesSelector.length < 1) return;
+      addressesSelector.forEach((select) => {
+        select.addEventListener('change', function (event) {
+          const provinces = this.options[this.selectedIndex].dataset.provinces;
+          const arrayOfProvince = JSON.parse(provinces);
+
+          var provinceSelector = document.querySelector(`#address_province_${this.dataset.id}`);
+          if (arrayOfProvince.length < 1) {
+            provinceSelector.setAttribute('disabled', 'disabled');
+          } else {
+            provinceSelector.removeAttribute('disabled');
+          }
+
+          provinceSelector.innerHTML = '';
+          let options = '';
+          for (let idx = 0; idx < arrayOfProvince.length; idx++) {
+            options += `<option value="${arrayOfProvince[idx][0]}">${arrayOfProvince[idx][1]}</option>`;
+          }
+
+          provinceSelector.innerHTML = options;
+        });
+      });
+    }
+  }
+
+  const customerAddress = new CustomerAddress();
+</script>
