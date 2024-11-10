@@ -1,15 +1,17 @@
-<div>
+{% for designer in shop.metaobjects.designer.values %}
   <div>
-    {% comment %} <img src="" alt=""> {% endcomment %}
-  </div>
-  <div>
-    <h2>test</h2>
     <div>
-      {{  }}
+      <img src="{{ designer.image | image_url: 500px  }}" alt="{{ designer.image.alt }}" width="" height="">
     </div>
-    <a href=""></a>
+    <div>
+      <h2>{{ designer.name }}</h2>
+      <div>
+        {{ designer.description }}
+      </div>
+      <a href="{{ designer.website }}" target="_blank">Website</a>
+    </div>
   </div>
-</div>
+{% endfor %}
 
 {% schema %}
 {
