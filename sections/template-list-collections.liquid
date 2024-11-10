@@ -16,7 +16,7 @@
                     {% assign collection_image = collection.products.first.image %}
                   {% endif %}
                   <img
-                    src="{{shop.secure_url}}{{ collection_image | image_url: 'medium' }}"
+                    src="{{shop.secure_url}}/cdn/shop/{{ collection_image | image_url: 'medium' }}"
                     alt="{{ collection.title |  escape}}"
                     width=""
                     height=""
