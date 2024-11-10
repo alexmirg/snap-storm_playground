@@ -1,0 +1,43 @@
+{% assign footer_menu_linklist = linklists[section.settings.menu].links %}
+
+<div class="border pt-4 pb-8">
+  <div class="max-w-6xl mx-auto px-4 sm:px-3">
+    <div class="flex justify-between items-center py-6  md:space-x-10">
+      <!-- STORE NAME / STORE LOGO -->
+      <div class="flex justify-start">
+        <h1 class="text-xl font-bold truncate">
+          <a href="{{ routes.root_url }}">
+            {{ shop.name }}
+          </a>
+        </h1>
+      </div>
+
+      <!-- NAVIGATION MENU -->
+      <nav class="flex space-x-10">
+        {% for link in footer_menu_linklist %}
+          <a href="{{link.url}}" class="text-base text-gray-500 hover:text-gray-900">{{ link.title }}</a>
+        {% endfor %}
+      </nav>
+    </div>
+    <p>
+      &copy; {{ 'now' | date: '%Y' }}
+      {{ shop.name }}. All rights reserved.
+    </p>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Footer",
+  "tag": "footer",
+  "class": "shrink-0",
+  "settings": [
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "Footer Menu",
+      "default": "main-menu"
+    }
+  ]
+}
+{% endschema %}
