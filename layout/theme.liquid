@@ -1,5 +1,5 @@
 <!doctype html>
-<html>
+<html class="h-full">
   <head>
     <title>{{ page_title }}</title>
     <meta charset="utf-8">
@@ -14,27 +14,14 @@
       [x-cloak] {
         display: none !important;
       }
-      html,
-      body {
-        width: 100%;
-        height: 100%;
-      }
-      .wrapper {
-        min-height: 100%;
-        display: flex;
-        flex-direction: column;
-      }
-      .wrapper > main {
-        flex: 1;
-      }
     </style>
     <script src="{{ 'application.js' | asset_url }}" defer></script>
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
   </head>
-  <body>
-    <div class="wrapper">
+  <body class="h-full">
+    <div class="wrapper min-h-full flex flex-col">
       {% section 'header' %}
-      <main role="main">
+      <main role="main" class="grow">
         {{ content_for_layout }}
       </main>
       {% section 'footer' %}

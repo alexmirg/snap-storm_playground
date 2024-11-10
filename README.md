@@ -18,7 +18,7 @@ git clone git@github.com:alexmirg/snap.storm.git
 cd snap.storm
 npm install
 shopify theme dev
-npx tailwindcss -i ./src/tailwind.css -o ./assets/applications.css --watch
+npx tailwindcss -i ./src/tailwind.css -o ./assets/application.css --watch
 ```
 
 ## Custom Components
