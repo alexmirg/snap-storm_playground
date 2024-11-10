@@ -1,7 +1,7 @@
 {% for designer in shop.metaobjects.designer.values %}
   <div>
     <div>
-      <img src="{{ designer.image | image_url: 500px  }}" alt="{{ designer.image.alt }}" width="" height="">
+      <img src="{{ designer.image | image_url: "500px"  }}" alt="{{ designer.image.alt }}" width="" height="">
     </div>
     <div>
       <h2>{{ designer.name }}</h2>
