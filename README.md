@@ -14,8 +14,8 @@ Follow these steps to set up the project:
 **Build Tailwind CSS:**
 
 ```bash
-git clone git@github.com:alexmirg/snap.storm.git
-cd snap.storm
+git clone git@github.com:alexmirg/snap-storm_playground.git
+cd snap-storm_playground
 npm install
 shopify theme dev
 npx tailwindcss -i ./src/tailwind.css -o ./assets/application.css --watch
