@@ -1,73 +1,22 @@
-{% comment %}
-  {% paginate blog.articles by section.settings.number_of_blog_posts %}
-{% endcomment %}
-{% paginate shop.metaobjects.designer.values by section.settings.items_per_page %}
-  <div class="py-8">
-    <div class="max-w-6xl mx-auto">
-      <h1 class="text-center text-3xl">
-        {{ section.settings.title }}
-      </h1>
-      <div class="grid grid-cols-1 gap-4">
-        {% for designer in shop.metaobjects.designer.values %}
-          <div class="w-full py-6 px-3">
-            <div class="bg-white shadow-xl rounded-lg overflow-hidden grid grid-cols-3">
-              <div class="col-span-1">
-                {% if designer.image %}
-                  <img
-                    src="{{ designer.image | image_url }}"
-                    width="{{ designer.image.width }}"
-                    height="{{ designer.image.height }}"
-                    alt="{{ designer.image.alt }}"
-                    class="w-full h-80 object-cover"
-                  >
-                {% else %}
-                  {{ 'image' | placeholder_svg_tag: 'w-full h-80 object-cover bg-gray-100' }}
-                {% endif %}
-              </div>
-              <div class="p-6 col-span-2">
-                <h2 class="text-xl font-medium my-4">{{ designer.name }}</h2>
-
-                <p>
-                  {{ designer.description }}
-                </p>
-
-                <a
-                  href="{{ designer.website }}"
-                  class="font-medium text-blue-600 hover:text-blue-800 my-4 inline-block"
-                  target="_blank"
-                >
-                  Website
-                </a>
-              </div>
-            </div>
-          </div>
-        {% endfor %}
-        {% render 'pagination', pagination: paginate %}
+{% for designer in shop.metaobjects.designer.values %}
+  <div>
+    <div>
+      <img src="{{ designer.image | image_url: "500px"  }}" alt="{{ designer.image.alt }}" width="" height="">
+    </div>
+    <div>
+      <h2>{{ designer.name }}</h2>
+      <div>
+        {{ designer.description }}
       </div>
+      <a href="{{ designer.website }}" target="_blank">Website</a>
     </div>
   </div>
-{%- endpaginate -%}
+{% endfor %}
 
 {% schema %}
 {
   "name": "Designer",
-  "settings": [
-    {
-      "type": "text",
-      "id": "title",
-      "label": "Title",
-      "default": "Our Designers"
-    },
-    {
-      "type": "range",
-      "id": "items_per_page",
-      "label": "Designers per page",
-      "default": 1,
-      "min": 1,
-      "max": 10,
-      "step": 1
-    }
-  ],
+  "settings": [],
   "presets": [
     {
       "name": "Designer",

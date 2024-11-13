@@ -87,71 +87,32 @@
                   {% unless product.has_only_default_variant %}
                     <variant-selector data-url="{{ product.url }}" data-section="{{ section.id }}">
                       {% for option in product.options_with_values %}
-                        <div class="mb-6">
-                          {% assign variant_id = forloop.index0 %}
-                          <label for="Option-{{section.id}}-{{forloop.index0}}" class="block my-2">
-                            {{ option.name -}}
-                          </label>
-                          {% case option.name %}
-                            {% when 'Case color' %}
-                              <fieldset
-                                class="variations-group flex my-2"
-                                id="Option-{{section.id}}-{{forloop.index0}}"
+                        <label for="Option-{{ section.id }}-{{forloop.index0}}">
+                          {{ option.name }}
+                        </label>
+                        <div class="my-2">
+                          <select
+                            name="options[{{option.name |  escape }}]"
+                            id="Option-{{ section.id }}-{{forloop.index0}}"
+                            class="w-full border py-3 px-3"
+                          >
+                            {% for value in option.values %}
+                              <option
+                                {% if option.selected_value == value %}
+                                  selected="selected"
+                                {% endif %}
+                                value="{{ value }}"
                               >
-                                {% for value in option.values %}
-                                  <label
-                                    for="Option-{{section.id}}-{{variant_id}}-{{forloop.index}}"
-                                    class="
-                                        flex flex-col px-2 items-center
-                                      {% if option.selected_value == value %}
-                                        font-bold
-                                      {% endif %}
-                                    "
-                                  >
-                                    <input
-                                      type="radio"
-                                      name="options[{{option.name |  escape }}]"
-                                      id="Option-{{section.id}}-{{variant_id}}-{{forloop.index}}"
-                                      value="{{ value }}"
-                                      class="hidden"
-                                      {% if option.selected_value == value %}
-                                        checked
-                                      {% endif %}
-                                    >
-                                    <span
-                                      class="inline-block w-8 h-8 rounded-full border-2 cursor-pointer"
-                                      style="background-color: {{ value }}"
-                                    ></span>
-                                    <span>
-                                      {{ value }}
-                                    </span>
-                                  </label>
-                                {% endfor %}
-                              </fieldset>
-                            {% else %}
-                              <select
-                                id="Option-{{section.id}}-{{forloop.index0}}"
-                                name="options[{{option.name |  escape }}]"
-                                class="w-full border py-3 px-3"
-                              >
-                                {% for value in option.values %}
-                                  <option
-                                    {% if option.selected_value == value %}
-                                      selected="selected"
-                                    {% endif %}
-                                    value="{{ value }}"
-                                  >
-                                    {{ value }}
-                                  </option>
-                                {% endfor %}
-                              </select>
-                          {% endcase %}
-                          <script type="application/json">
-                            {{
-                              product.variants | json
-                            }}
-                          </script>
+                                {{ value }}
+                              </option>
+                            {% endfor %}
+                          </select>
                         </div>
+                        <script type="application/json">
+                          {{
+                            product.variants | json
+                          }}
+                        </script>
                       {% endfor %}
                     </variant-selector>
                   {% endunless %}
@@ -159,29 +120,15 @@
               {% when 'quantity' %}
                 <div class="my-3">
                   <label for="Quantity-{{section.id}}" class="">Quantity</label>
-                  <div class="my-2 flex max-w-48">
-                    <button
-                      x-on:click="document.querySelector('#Quantity-{{section.id}}').stepDown()"
-                      type="button"
-                      class="w-full bg-gray-900 text-white hover:bg-gray-700 rounded-sm"
-                    >
-                      -
-                    </button>
+                  <div class="my-2">
                     <input
                       type="number"
                       id="Quantity-{{section.id}}"
                       name="quantity"
                       value="1"
                       min="1"
-                      class="w-full border py-3 px-3 text-center"
+                      class="w-full border py-3 px-3"
                     >
-                    <button
-                      x-on:click="document.querySelector('#Quantity-{{section.id}}').stepUp()"
-                      type="button"
-                      class="w-full bg-gray-900 text-white hover:bg-gray-700 rounded-sm"
-                    >
-                      +
-                    </button>
                   </div>
                 </div>
               {% when 'description' %}
@@ -254,7 +201,6 @@
     }
 
     onVariantChange(event) {
-      console.log(event.target.value);
       const formData = new FormData();
       formData.append('section_id', this.section);
       formData.append('id', event.target.value);
@@ -266,24 +212,10 @@
         this.updateURL();
         this.updateFormID();
         this.updatePrice();
-        this.updateSelectedField();
       }
     }
-
-    updateSelectedField() {
-      const fields = this.querySelectorAll('input[type="radio"]');
-      const selectedFields = this.querySelectorAll('input[type="radio"]:checked');
-
-      fields.forEach((field) => {
-        field.parentElement.classList.remove('font-bold');
-      });
-      selectedFields.forEach((field) => {
-        field.parentElement.classList.add('font-bold');
-      });
-    }
-
     getSelectedOptions() {
-      this.options = Array.from(this.querySelectorAll('select, input[type="radio"]:checked'), (select) => select.value);
+      this.options = Array.from(this.querySelectorAll('select'), (select) => select.value);
     }
     getVariantJSON() {
       this.variantData = this.variantData || JSON.parse(this.querySelector('[type="application/json"]').textContent);
@@ -297,6 +229,7 @@
             return this.options[index] === option;
           })
           .includes(false);
+
         if (findings) {
           return variant;
         }
