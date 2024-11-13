@@ -12,7 +12,7 @@
     </div>
     <div class="max-w-6xl flex flex-col my-10 mx-auto">
       <form
-        x-data="{ triggerUpdate() { this.$refs.updateButton.click(); }, updateQuantity(index, delta) { let input = document.getElementById('updates_' + index); if(parseInt(input.value) + delta <= 0) return; input.value = parseInt(input.value) + delta; this.triggerUpdate(); } }"
+        x-data
         action="{{ routes.cart_url }}"
         method="POST"
         novalidate
@@ -57,7 +57,7 @@
                 </td>
                 <td class="py-4 px-2">
                   <button
-                    @click="updateQuantity({{ forloop.index }}, -1)"
+                    x-on:click.debounce.100ms="document.querySelector('#updates_{{ forloop.index }}').stepDown(); document.querySelector('#updateButton').click();"
                     class="text-gray-500"
                     type="button"
                     aria-label="Decrease quantity"
@@ -78,7 +78,6 @@
                     </svg>
                   </button>
                   <input
-                    @change.debounce="triggerUpdate()"
                     type="number"
                     name="updates[]"
                     value="{{ item.quantity }}"
@@ -87,7 +86,7 @@
                     class="w-12 border p-2 text-center"
                   >
                   <button
-                    @click="updateQuantity({{ forloop.index }}, 1)"
+                    x-on:click.debounce.100ms="document.querySelector('#updates_{{ forloop.index }}').stepUp(); document.querySelector('#updateButton').click();"
                     class="text-gray-500"
                     type="button"
                     aria-label="Increase quantity"
@@ -130,7 +129,7 @@
                 {% when 'update_button' %}
                   <div class="my-2">
                     <button
-                      x-ref="updateButton"
+                      id="updateButton"
                       name="update"
                       type="submit"
                       class="w-full p-3 border border-gray-600 text-gray-600 font-medium hover:bg-gray-600 hover:text-white"

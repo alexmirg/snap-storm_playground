@@ -121,7 +121,13 @@
                 <div class="my-3">
                   <label for="Quantity-{{section.id}}" class="">Quantity</label>
                   <div class="my-2 flex max-w-48">
-                    <button type="button" class="w-full border py-3 px-3 text-center">-</button>
+                    <button
+                      x-on:click="document.querySelector('#Quantity-{{section.id}}').stepDown()"
+                      type="button"
+                      class="w-full bg-gray-900 text-white hover:bg-gray-700 rounded-sm"
+                    >
+                      -
+                    </button>
                     <input
                       type="number"
                       id="Quantity-{{section.id}}"
@@ -130,7 +136,13 @@
                       min="1"
                       class="w-full border py-3 px-3 text-center"
                     >
-                    <button type="button" class="w-full border py-3 px-3 text-center">+</button>
+                    <button
+                      x-on:click="document.querySelector('#Quantity-{{section.id}}').stepUp()"
+                      type="button"
+                      class="w-full bg-gray-900 text-white hover:bg-gray-700 rounded-sm"
+                    >
+                      +
+                    </button>
                   </div>
                 </div>
               {% when 'description' %}
