@@ -42,7 +42,12 @@
         },
         "custom_accordions": {
           "type": "custom_accordions",
-          "settings": {}
+          "repeater": "{{ product.metafields.custom.testlist.value }}",
+          "settings": {
+            "custom_accordions": false,
+            "accordion_title": "{{ block.repeater.title.value }}",
+            "accordion_content": ""
+          }
         }
       },
       "block_order": [
@@ -54,8 +59,11 @@
         "description",
         "checkout_buttons",
         "custom_accordions"
-      ]
+      ],
+      "settings": {}
     }
   },
-  "order": ["template"]
+  "order": [
+    "template"
+  ]
 }
