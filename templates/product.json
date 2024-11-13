@@ -44,7 +44,7 @@
           "type": "custom_accordions",
           "settings": {
             "custom_accordions": false,
-            "accordion_title": "custom",
+            "accordion_title": "",
             "accordion_content": ""
           }
         }
@@ -70,8 +70,5 @@
       }
     }
   },
-  "order": [
-    "template",
-    "featured_collection_8XypBY"
-  ]
+  "order": ["template", "featured_collection_8XypBY"]
 }
