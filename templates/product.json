@@ -42,7 +42,11 @@
         },
         "custom_accordions": {
           "type": "custom_accordions",
-          "settings": {}
+          "settings": {
+            "custom_accordions": false,
+            "accordion_title": "custom",
+            "accordion_content": ""
+          }
         }
       },
       "block_order": [
@@ -54,8 +58,20 @@
         "description",
         "checkout_buttons",
         "custom_accordions"
-      ]
+      ],
+      "settings": {}
+    },
+    "featured_collection_8XypBY": {
+      "type": "featured-collection",
+      "settings": {
+        "title": "You Might Also Like",
+        "featured_collection": "amazing-watches",
+        "number_of_products_to_show": 4
+      }
     }
   },
-  "order": ["template"]
+  "order": [
+    "template",
+    "featured_collection_8XypBY"
+  ]
 }
