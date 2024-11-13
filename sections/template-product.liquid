@@ -120,15 +120,17 @@
               {% when 'quantity' %}
                 <div class="my-3">
                   <label for="Quantity-{{section.id}}" class="">Quantity</label>
-                  <div class="my-2">
+                  <div class="my-2 flex max-w-48">
+                    <button type="button" class="w-full border py-3 px-3 text-center">-</button>
                     <input
                       type="number"
                       id="Quantity-{{section.id}}"
                       name="quantity"
                       value="1"
                       min="1"
-                      class="w-full border py-3 px-3"
+                      class="w-full border py-3 px-3 text-center"
                     >
+                    <button type="button" class="w-full border py-3 px-3 text-center">+</button>
                   </div>
                 </div>
               {% when 'description' %}

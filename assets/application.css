@@ -1017,6 +1017,14 @@ video {
   max-width: 8rem;
 }
 
+.max-w-36 {
+  max-width: 9rem;
+}
+
+.max-w-48 {
+  max-width: 12rem;
+}
+
 .flex-1 {
   flex: 1 1 0%;
 }
@@ -1613,6 +1621,11 @@ video {
 .text-white {
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity));
+}
+
+.text-black {
+  --tw-text-opacity: 1;
+  color: rgb(0 0 0 / var(--tw-text-opacity));
 }
 
 .underline {
