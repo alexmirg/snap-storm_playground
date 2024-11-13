@@ -39,6 +39,14 @@
         "checkout_buttons": {
           "type": "checkout_buttons",
           "settings": {}
+        },
+        "custom_accordions": {
+          "type": "custom_accordions",
+          "settings": {
+            "custom_accordions": false,
+            "accordion_title": "test",
+            "accordion_content": "test"
+          }
         }
       },
       "block_order": [
@@ -48,7 +56,8 @@
         "variant_selector",
         "quantity",
         "description",
-        "checkout_buttons"
+        "checkout_buttons",
+        "custom_accordions"
       ],
       "settings": {}
     },
