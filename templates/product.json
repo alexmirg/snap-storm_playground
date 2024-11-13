@@ -56,7 +56,8 @@
         "variant_selector",
         "quantity",
         "description",
-        "checkout_buttons"
+        "checkout_buttons",
+        "custom_accordions"
       ],
       "settings": {}
     },
