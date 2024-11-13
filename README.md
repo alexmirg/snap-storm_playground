@@ -18,6 +18,8 @@ git clone git@github.com:alexmirg/snap-storm_playground.git
 cd snap-storm_playground
 npm install
 shopify theme dev
+shopify theme dev --store snap-storm.myshopify.com
+shopify theme pull
 npx tailwindcss -i ./src/tailwind.css -o ./assets/application.css --watch
 ```
 
