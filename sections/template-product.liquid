@@ -154,9 +154,7 @@
                   </button>
                 </div>
               {% when 'custom_accordions' %}
-                {% if block.settings.custom_accordions %}
-                  <div class="my-3">// todo add accordion from product metafields</div>
-                {% endif %}
+                {% render 'accordion', accordion: block %}
               {% else %}
 
             {% endcase %}
@@ -337,6 +335,17 @@
           "type": "checkbox",
           "id": "custom_accordions",
           "label": "Enable custom accordions"
+        },
+        {
+          "type": "text",
+          "id": "accordion_title",
+          "label": "Metafield Namespace",
+          "default": "custom"
+        },
+        {
+          "type": "text",
+          "id": "accordion_content",
+          "label": "Metafield Key"
         }
       ]
     }
