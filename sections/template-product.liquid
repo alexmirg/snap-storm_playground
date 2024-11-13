@@ -153,6 +153,10 @@
                     {% endif %}
                   </button>
                 </div>
+              {% when 'custom_accordions' %}
+                {% if block.settings.custom_accordions %}
+                  <div class="my-3">// todo add accordion from product metafields</div>
+                {% endif %}
               {% else %}
 
             {% endcase %}
@@ -324,6 +328,17 @@
       "type": "checkout_buttons",
       "name": "Checkout buttons",
       "limit": 1
+    },
+    {
+      "type": "custom_accordions",
+      "name": "Custom accordions",
+      "settings": [
+        {
+          "type": "checkbox",
+          "id": "custom_accordions",
+          "label": "Enable custom accordions"
+        }
+      ]
     }
   ]
 }

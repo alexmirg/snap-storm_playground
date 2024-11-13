@@ -1,6 +1,6 @@
 <div class="w-full divide-y divide-neutral-300 overflow-hidden">
   <h3 class="text-xl text-gray-900 mb-4 mt-6">Product details</h3>
-  {% for accordion in accordions %}
+  {% for block in section.blocks %}
     <div x-data="{ isExpanded: false }" class="divide-y divide-neutral-300 ">
       <button
         id="controlsAccordionItemOne"
@@ -11,7 +11,7 @@
         :class="isExpanded ? 'text-onSurfaceStrong'  : 'text-onSurface'"
         :aria-expanded="isExpanded ? 'true' : 'false'"
       >
-        {{ accordion.title }}
+        {{ block.settings.title }}
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 24 24"
@@ -34,7 +34,7 @@
         x-collapse
       >
         <div class="p-4 text-sm sm:text-base text-pretty">
-          {{ accordion.content }}
+          {{ block.settings.title }}
         </div>
       </div>
     </div>
@@ -45,7 +45,6 @@
 {
   "name": "Product Accordion",
   "tag": "section",
-  "class": "",
   "settings": [
     {
       "type": "text",
@@ -54,10 +53,55 @@
       "default": "Product Accordion"
     }
   ],
+  "blocks": [
+    {
+      "type": "accordion",
+      "name": "Accordion",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title"
+        },
+        {
+          "type": "textarea",
+          "id": "content",
+          "label": "Content"
+        }
+      ]
+    },
+    {
+      "type": "product_accordion",
+      "name": "Product Accordion",
+      "settings": [
+        {
+          "type": "text",
+          "id": "metafield_namespace",
+          "label": "Metafield Namespace",
+          "default": "custom"
+        },
+        {
+          "type": "text",
+          "id": "metafield_key",
+          "label": "Metafield Key",
+          "default": "accordion_content"
+        }
+      ]
+    }
+  ],
   "presets": [
     {
       "name": "Product Accordion",
-      "settings": {}
+      "settings": {},
+      "blocks": [
+        {
+          "type": "accordion",
+          "settings": {
+            "title": "Accordion 1",
+            "content": "<p>Accordion 1 content</p>"
+          }
+        }
+      ]
     }
   ]
 }
