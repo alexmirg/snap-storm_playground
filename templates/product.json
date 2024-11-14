@@ -40,12 +40,13 @@
           "type": "checkout_buttons",
           "settings": {}
         },
-        "custom_accordions": {
+        "custom_accordions_HB7daW": {
           "type": "custom_accordions",
+          "repeater": "{{ product.metafields.custom.testlist.value }}",
           "settings": {
             "custom_accordions": false,
-            "accordion_title": "test",
-            "accordion_content": "test"
+            "accordion_title": "{{ block.repeater.title.value }}",
+            "accordion_content": "{{ block.repeater.test.value }}"
           }
         }
       },
@@ -57,7 +58,7 @@
         "quantity",
         "description",
         "checkout_buttons",
-        "custom_accordions"
+        "custom_accordions_HB7daW"
       ],
       "settings": {}
     },
