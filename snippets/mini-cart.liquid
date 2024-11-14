@@ -2,13 +2,55 @@
   x-data="
       {
       openMiniCart: false,
+      updateCartQuantity(id, qty) {
+        const updates = {
+          [id]: qty
+        };
+        fetch(window.Shopify.routes.root + 'cart/update.js', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ updates })
+        })
+        .then(response => {
+          window.dispatchEvent(new CustomEvent('mini-cart-updated'));
+          getCartCount();
+          return response.json();
+        })
+        .catch((error) => {
+          console.error('Error:', error);
+        });
+      },
       updateCartData() {
         fetch('/?view=cart')
           .then((response) => response.text())
           .then((cartContent) => {
-            $refs.miniCartData.innerHTML = cartContent;
+            if($refs.miniCartData) {
+              $refs.miniCartData.innerHTML = cartContent;
+            }
           });
       },
+      removeCartItem(id) {
+       const updates = {
+        [id]: 0
+       };
+      fetch(window.Shopify.routes.root + 'cart/update.js', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ updates })
+      })
+      .then(response => {
+        window.dispatchEvent(new CustomEvent('mini-cart-updated'));
+        getCartCount();
+        return response.json();
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
+      }
     }
   "
   x-show="openMiniCart"
@@ -18,7 +60,7 @@
 >
   <div class="absolute inset-0 bg-black bg-opacity-80"></div>
   <div
-    class="fixed right-0 inset-y-0 bg-gray-100 min-w-80 max-w-96"
+    class="fixed right-0 inset-y-0 bg-white min-w-80 max-w-96"
     x-show="openMiniCart"
     x-transition:enter="transform transition-transform duration-300 ease-in-out"
     x-transition:enter-start="translate-x-full"
@@ -39,7 +81,7 @@
         <form action="{{ routes.cart_url }}" method="post" class="h-full relative flex flex-col justify-between">
           {% if cart.item_count > 0 %}
             <div>
-              <div class="flex justify-between items-center py-3 px-4">
+              <div class="flex justify-between items-center pt-8 pb-3 px-4">
                 <h3 class="text-2xl text-center w-full">
                   Your cart
                   <span class="text-gray-500 text-sm">({{ cart.item_count }} items)</span>
@@ -66,13 +108,11 @@
                       </div>
                       <div class="minicart-product-price">
                         <span>{{ item.line_price | money }}</span>
-                        {% if item.original_price != item.final_price %}
-                          <span class="text-base text-gray-500 line-through">{{ item.original_price | money }}</span>
-                        {% endif %}
+                        <span class="text-base text-gray-500 line-through">{{ item.original_price | money }}</span>
                       </div>
                       <div class="minicart-product-quantity">
                         <button
-                          x-on:click.debounce.100ms="document.querySelector('#updates_{{ forloop.index }}').stepDown(); document.querySelector('#updateButton').click();"
+                          x-on:click.debounce.50ms="document.querySelector('#updates_{{ forloop.index }}').stepDown();"
                           class="text-gray-500"
                           type="button"
                           aria-label="Decrease quantity"
@@ -93,6 +133,7 @@
                           </svg>
                         </button>
                         <input
+                          x-on:change="updateCartQuantity({{ item.id }}, $event.target.value)"
                           type="number"
                           name="updates[]"
                           value="{{ item.quantity }}"
@@ -101,7 +142,7 @@
                           class="w-12 border p-2 text-center"
                         >
                         <button
-                          x-on:click.debounce.100ms="document.querySelector('#updates_{{ forloop.index }}').stepUp(); document.querySelector('#updateButton').click();"
+                          x-on:click.debounce.100ms="document.querySelector('#updates_{{ forloop.index }}').stepUp();"
                           class="text-gray-500"
                           type="button"
                           aria-label="Increase quantity"
@@ -123,6 +164,7 @@
                         </button>
                       </div>
                       <button
+                        x-on:click="removeCartItem({{ item.id }})"
                         type="button"
                         class="h-7 w-7 p-1 cursor-pointer flex justify-center items-center absolute -right-2 top-3 rounded-full"
                       >
