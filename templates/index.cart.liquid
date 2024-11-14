@@ -1,5 +1,10 @@
 {% layout none %}
-<form action="{{ routes.cart_url }}" method="post" class="h-full relative flex flex-col justify-between">
+<form
+  action="{{ routes.cart_url }}"
+  method="POST"
+  novalidate
+  class="h-full relative flex flex-col justify-between"
+>
   {% if cart.item_count > 0 %}
     <div>
       <div class="flex justify-between items-center pt-8 pb-3 px-4">
@@ -33,7 +38,10 @@
               </div>
               <div class="minicart-product-quantity">
                 <button
-                  x-on:click.debounce.50ms="document.querySelector('#updates_{{ forloop.index }}').stepDown();"
+                  x-on:click.debounce.50ms="
+                    document.querySelector('#updates_{{ forloop.index }}').stepDown();
+                    document.querySelector('#updates_{{ forloop.index }}').dispatchEvent(new Event('change'));
+                  "
                   class="text-gray-500"
                   type="button"
                   aria-label="Decrease quantity"
@@ -63,7 +71,7 @@
                   class="w-12 border p-2 text-center"
                 >
                 <button
-                  x-on:click.debounce.100ms="document.querySelector('#updates_{{ forloop.index }}').stepUp();"
+                  x-on:click.debounce.50ms="document.querySelector('#updates_{{ forloop.index }}').stepUp(); document.querySelector('#updates_{{ forloop.index }}').dispatchEvent(new Event('change'));"
                   class="text-gray-500"
                   type="button"
                   aria-label="Increase quantity"
