@@ -211,11 +211,16 @@
                   </button>
                 </div>
               {% when 'custom_accordions' %}
-                {% render 'accordion', accordion: block %}
+                {% comment %} {% for item in custom_accordions.items %} {% endcomment %}
+                {% comment %} {% endfor %} {% endcomment %}
               {% else %}
 
             {% endcase %}
           {% endfor %}
+          {% assign accordions = product.metafields.custom.testlist.value %}
+          {% if accordions %}
+            {% render 'accordion', accordions: accordions %}
+          {% endif %}
         {% endform %}
       </div>
     </div>
