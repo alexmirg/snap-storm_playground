@@ -66,6 +66,9 @@
                       </div>
                       <div class="minicart-product-price">
                         <span>{{ item.line_price | money }}</span>
+                        {% if item.original_price != item.final_price %}
+                          <span class="text-base text-gray-500 line-through">{{ item.original_price | money }}</span>
+                        {% endif %}
                       </div>
                       <div class="minicart-product-quantity">
                         <button
