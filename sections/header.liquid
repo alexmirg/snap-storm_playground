@@ -78,7 +78,10 @@
         >
           {% render 'icon-shopping-bag' %}
           {% if cart.item_count > 0 %}
-            <span class="border rounded-full border-gray-500 text-xs font-bold text-red-700 absolute -bottom-1 -right-1 px-1 bg-white">
+            <span
+              id="cartCounter"
+              class="border rounded-full border-gray-500 text-xs font-bold text-red-700 absolute -bottom-1 -right-1 px-1 bg-white"
+            >
               {{- cart.item_count -}}
             </span>
           {% endif %}

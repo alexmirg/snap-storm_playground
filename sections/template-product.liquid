@@ -196,6 +196,7 @@
               {% when 'checkout_buttons' %}
                 <div class="my-3">
                   <button
+                    id="addToCartButton"
                     type="submit"
                     class="w-full bg-gray-900 text-white hover:bg-gray-700 rounded-sm py-4 px-6 my-2"
                     {% if selected_variant.available == false %}
@@ -357,7 +358,62 @@
     }
   });
 </script>
+<script>
+  function getCartCount() {
+    const url = window.Shopify.routes.root + 'cart.js';
 
+    fetch(url)
+      .then((response) => response.json())
+      .then(({ item_count }) => {
+        const cartCount = document.querySelector('#cartCounter');
+        cartCount.innerHTML = item_count;
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
+  }
+
+  const addtoCartButton = document.querySelector('#addToCartButton');
+  addtoCartButton.addEventListener('click', (event) => {
+    let variantId = document.querySelector('input[name="id"]').value;
+    let quantity = document.querySelector('input[name="quantity"]').value;
+    const loaderEl = document.querySelector('#loader');
+    const url = window.Shopify.routes.root + 'cart/add.js';
+    event.preventDefault();
+
+    loaderEl.classList.remove('hidden');
+    loaderEl.classList.add('flex');
+    let formData = {
+      items: [
+        {
+          id: variantId,
+          quantity: quantity,
+        },
+      ],
+    };
+
+    fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(formData),
+    })
+      .then((response) => {
+        getCartCount();
+        window.dispatchEvent(new CustomEvent('open-mini-cart'));
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      })
+      .finally(() => {
+        loaderEl.classList.remove('flex');
+        loaderEl.classList.add('hidden');
+      });
+
+    return false;
+  });
+</script>
 {% schema %}
 {
   "name": "Product",
