@@ -1,0 +1,29 @@
+<div
+  x-data="{ openMiniCart: false }"
+  x-show="openMiniCart"
+  @open-mini-cart.window="openMiniCart = !openMiniCart"
+  class="fixed inset-0 overflow-hidden z-10"
+>
+  <div class="absolute inset-0 bg-black bg-opacity-80"></div>
+  <div
+    class="fixed max-w-full right-0 inset-y-0 bg-gray-100 min-w-80"
+    x-show="openMiniCart"
+    x-transition:enter="transform transition-transform duration-300 ease-in-out"
+    x-transition:enter-start="translate-x-full"
+    x-transition:enter-end="translate-x-0"
+    x-transition:leave="transform transition-transform duration-300 ease-in-out"
+    x-transition:leave-start="translate-x-0"
+    x-transition:leave-end="translate-x-full"
+  >
+    <div class="w-full relative">
+      <button
+        x-on:click="openMiniCart = false"
+        type="button"
+        class="absolute top-0 -left-8 mr-5 mt-5 border border-transparent text-white"
+      >
+        {% render 'icon-close' %}
+      </button>
+      <div x-on:click.outside="openMiniCart = false" class="cart-content h-screen"></div>
+    </div>
+  </div>
+</div>

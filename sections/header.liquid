@@ -72,6 +72,7 @@
           {% render 'icon-search' %}
         </button>
         <a
+          @click.prevent="$dispatch('open-mini-cart')"
           href="{{ routes.cart_url }}"
           class="whitespace-nowrap w-6 text-base text-gray-500 hover:text-gray-900 relative"
         >
@@ -179,6 +180,7 @@
     </div>
   </div>
 </div>
+{% render 'mini-cart' %}
 
 {% schema %}
 {
