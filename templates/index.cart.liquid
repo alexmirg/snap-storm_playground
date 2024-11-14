@@ -1,0 +1,129 @@
+{% layout none %}
+<form action="{{ routes.cart_url }}" method="post" class="h-full relative flex flex-col justify-between">
+  {% if cart.item_count > 0 %}
+    <div>
+      <div class="flex justify-between items-center py-3 px-4">
+        <h3 class="text-2xl text-center w-full">
+          Your cart
+          <span class="text-gray-500 text-sm">({{ cart.item_count }} items)</span>
+        </h3>
+      </div>
+      <div id="miniCartContent" class="overflow-y-scroll p-6">
+        {% for item in cart.items %}
+          <div class="minicart-item flex gap-5 py-3 w-full items-center relative">
+            <div class="w-4/12">
+              {% if item.image %}
+                {{ item.image | image_url: width: 200 | image_tag: loading: 'lazy', class: 'rounded-xs' }}
+              {% else %}
+                {{ 'product-1' | placeholder_svg_tag: class: 'rounded-xs' }}
+              {% endif %}
+            </div>
+            <div class="w-8/12">
+              <div class="minicart-product-title">
+                <a href="{{ item.url }}" class="my-1">
+                  {{ item.product.title | truncatewords: 5 }}
+                </a>
+                <span class=" block text-sm text-gray-500 my-1">
+                  {{ item.variant.title }}
+                </span>
+              </div>
+              <div class="minicart-product-price">
+                <span>{{ item.line_price | money }}</span>
+              </div>
+              <div class="minicart-product-quantity">
+                <button
+                  x-on:click.debounce.100ms="document.querySelector('#updates_{{ forloop.index }}').stepDown(); document.querySelector('#updateButton').click();"
+                  class="text-gray-500"
+                  type="button"
+                  aria-label="Decrease quantity"
+                >
+                  <svg
+                    class="w-4 h-4"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M20 12H4"
+                    ></path>
+                  </svg>
+                </button>
+                <input
+                  type="number"
+                  name="updates[]"
+                  value="{{ item.quantity }}"
+                  min="1"
+                  id="updates_{{ forloop.index }}"
+                  class="w-12 border p-2 text-center"
+                >
+                <button
+                  x-on:click.debounce.100ms="document.querySelector('#updates_{{ forloop.index }}').stepUp(); document.querySelector('#updateButton').click();"
+                  class="text-gray-500"
+                  type="button"
+                  aria-label="Increase quantity"
+                >
+                  <svg
+                    class="w-4 h-4"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+                    ></path>
+                  </svg>
+                </button>
+              </div>
+              <button
+                type="button"
+                class="h-7 w-7 p-1 cursor-pointer flex justify-center items-center absolute -right-2 top-3 rounded-full"
+              >
+                {% render 'icon-trash' %}
+              </button>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+    <div id="miniCartButtons" class="border-t-2 border-gray-200 p-4 w-full">
+      <h2 class="flex justify-between items-center text-lg pb-2 font-semibold">
+        <span>Subtotal:</span>
+        <span>{{ cart.total_price | money }}</span>
+      </h2>
+      <div class="my-2">
+        <button
+          type="submit"
+          name="checkout"
+          class="w-full p-3 border border-gray-600 font-medium bg-gray-600 text-white"
+        >
+          Checkout
+        </button>
+        <a
+          href="{{ routes.cart_url }}"
+          class="block mt-2 w-full text-center p-3 border border-gray-600 text-gray-600 font-medium hover:bg-gray-600 hover:text-white"
+          >View Cart</a
+        >
+      </div>
+    </div>
+  {% else %}
+    <div class="text-center flex g-full px-4 flex-col justify-center items-center">
+      <span class="max-w-9 w-full mt-20">
+        {% render 'icon-shopping-bag' %}
+      </span>
+      <h3 class="text-center text-xl py-4">Your cart is empty</h3>
+      <a
+        href="{{ routes.all_products_collection_url }}"
+        class="w-full bg-gray-900 text-white hover:bg-gray-700 rounded-sm py-4 px-6 my-2"
+        >Continue shopping</a
+      >
+    </div>
+  {% endif %}
+</form>

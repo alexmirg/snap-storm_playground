@@ -401,6 +401,7 @@
     })
       .then((response) => {
         getCartCount();
+        window.dispatchEvent(new CustomEvent('mini-cart-updated'));
         window.dispatchEvent(new CustomEvent('open-mini-cart'));
       })
       .catch((error) => {
